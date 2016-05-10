@@ -474,7 +474,7 @@ static void Read_Request_CB(uint16_t handle)
  */
 void HCI_Event_CB(void *pckt)
 {
-    hci_uart_pckt *hci_pckt = pckt;
+    hci_uart_pckt *hci_pckt = (hci_uart_pckt*)pckt;
     /* obtain event packet */
     hci_event_pckt *event_pckt = (hci_event_pckt*)hci_pckt->data;
     if(hci_pckt->type != HCI_EVENT_PKT)
@@ -484,7 +484,7 @@ void HCI_Event_CB(void *pckt)
 
     case EVT_DISCONN_COMPLETE:
     {
-     disconn_event_pckt *evt = (void *)event_pckt->data;
+     disconn_event_pckt *evt = (disconn_event_pckt *)event_pckt->data;
      printf("conn handle: %x\n", evt->conn_handle);
 #if defined (CLIENT_ROLE) || defined (CLIENT_SERVER_ROLE)
         host_notification_enabled = 0;
@@ -500,11 +500,11 @@ void HCI_Event_CB(void *pckt)
     
     case EVT_LE_META_EVENT:
     {
-        evt_le_meta_event *evt = (void *)event_pckt->data;
+        evt_le_meta_event *evt = (evt_le_meta_event *)event_pckt->data;
         switch(evt->subevent) {
         case EVT_LE_CONN_COMPLETE:
         {
-            evt_le_connection_complete *cc = (void *)evt->data;
+            evt_le_connection_complete *cc = (evt_le_connection_complete *)evt->data;
             if(cc->role == SLAVE_ROLE){
                 /*device*/
                 ble_device_on_connect();
@@ -530,7 +530,7 @@ void HCI_Event_CB(void *pckt)
 
     case EVT_VENDOR:
     {
-        evt_blue_aci *blue_evt = (void*)event_pckt->data;
+        evt_blue_aci *blue_evt = (evt_blue_aci*)event_pckt->data;
         switch(blue_evt->ecode) {
         case EVT_BLUE_GATT_ATTRIBUTE_MODIFIED:
         {
@@ -556,7 +556,7 @@ void HCI_Event_CB(void *pckt)
         break;
         case EVT_BLUE_GATT_READ_PERMIT_REQ:
         {
-            evt_gatt_read_permit_req *pr = (void*)blue_evt->data;
+            evt_gatt_read_permit_req *pr = (evt_gatt_read_permit_req*)blue_evt->data;
             Read_Request_CB(pr->attr_handle);
         }
         break;

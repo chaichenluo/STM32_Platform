@@ -279,14 +279,14 @@ int hci_send_req(struct hci_request *r, BOOL async)
         Disable_SPI_IRQ();
         list_remove_head(&hciReadPktRxQueue, (tListNode **)&hciReadPacket);
 
-        hci_hdr = (void *)hciReadPacket->dataBuff;
+        hci_hdr = (hci_uart_pckt *)hciReadPacket->dataBuff;
         if(hci_hdr->type != HCI_EVENT_PKT) {
             list_insert_tail(&hciTempQueue, (tListNode *)hciReadPacket); // See comment below
             Enable_SPI_IRQ();
             continue;
         }
 
-        event_pckt = (void *) (hci_hdr->data);
+        event_pckt = (hci_event_pckt *) (hci_hdr->data);
 
         ptr = hciReadPacket->dataBuff + (1 + HCI_EVENT_HDR_SIZE);
         len = hciReadPacket->data_len - (1 + HCI_EVENT_HDR_SIZE);
@@ -294,7 +294,7 @@ int hci_send_req(struct hci_request *r, BOOL async)
         switch (event_pckt->evt) {
 
         case EVT_CMD_STATUS:
-            cs = (void *) ptr;
+            cs = (evt_cmd_status *) ptr;
 
             if (cs->opcode != opcode)
                 goto failed;
@@ -311,7 +311,7 @@ int hci_send_req(struct hci_request *r, BOOL async)
             goto done;
 
         case EVT_CMD_COMPLETE:
-            cc = (void *) ptr;
+            cc = (evt_cmd_complete *) ptr;
 
             if (cc->opcode != opcode)
                 goto failed;
@@ -324,7 +324,7 @@ int hci_send_req(struct hci_request *r, BOOL async)
             goto done;
 
         case EVT_LE_META_EVENT:
-            me = (void *) ptr;
+            me = (evt_le_meta_event *) ptr;
 
             if (me->subevent != r->event)
                 break;

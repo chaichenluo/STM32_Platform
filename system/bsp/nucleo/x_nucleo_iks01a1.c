@@ -106,78 +106,6 @@ void LSM303AGR_IO_ITConfig( void );
 //                                      uint16_t NumByteToRead);
 
 
-
-/* Link function for PRESSURE peripheral */
-PRESSURE_StatusTypeDef LPS25H_IO_Init(void);
-void LPS25H_IO_ITConfig( void );
-PRESSURE_StatusTypeDef LPS25HB_IO_Init(void);
-void LPS25HB_IO_ITConfig( void );
-PRESSURE_StatusTypeDef LPS25H_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-                                       uint16_t NumByteToWrite);
-PRESSURE_StatusTypeDef LPS25HB_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-                                        uint16_t NumByteToWrite);
-PRESSURE_StatusTypeDef LPS25H_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-                                      uint16_t NumByteToRead);
-PRESSURE_StatusTypeDef LPS25HB_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-                                       uint16_t NumByteToRead);
-
-/* Link function for HUM_TEMP peripheral */
-HUM_TEMP_StatusTypeDef HTS221_IO_Init(void);
-void HTS221_IO_ITConfig( void );
-HUM_TEMP_StatusTypeDef HTS221_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-                                       uint16_t NumByteToWrite);
-HUM_TEMP_StatusTypeDef HTS221_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-                                      uint16_t NumByteToRead);
-
-static IMU_6AXES_StatusTypeDef IMU_6AXES_IO_Init(void);
-static IMU_6AXES_StatusTypeDef IMU_6AXES_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-        uint16_t NumByteToWrite);
-static IMU_6AXES_StatusTypeDef IMU_6AXES_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-        uint16_t NumByteToRead);
-#ifdef I2C_DMA_MODE
-static IMU_6AXES_StatusTypeDef IMU_6AXES_IO_Read_DMA( uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-        uint16_t NumByteToRead );
-#endif
-#ifdef MAGNETO_DRIVER
-static MAGNETO_StatusTypeDef MAGNETO_IO_Init(void);
-static MAGNETO_StatusTypeDef MAGNETO_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-        uint16_t NumByteToWrite);
-static MAGNETO_StatusTypeDef MAGNETO_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-        uint16_t NumByteToRead);
-#endif
-static PRESSURE_StatusTypeDef PRESSURE_IO_Init(void);
-static PRESSURE_StatusTypeDef PRESSURE_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-        uint16_t NumByteToWrite);
-static PRESSURE_StatusTypeDef PRESSURE_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-        uint16_t NumByteToRead);
-static HUM_TEMP_StatusTypeDef HUM_TEMP_IO_Init(void);
-static HUM_TEMP_StatusTypeDef HUM_TEMP_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-        uint16_t NumByteToWrite);
-static HUM_TEMP_StatusTypeDef HUM_TEMP_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
-        uint16_t NumByteToRead);
-
-/************************************I2C**********************************************/
-static void I2C_EXPBD_MspInit(void);
-static void I2C_EXPBD_Error(uint8_t Addr);
-static HAL_StatusTypeDef I2C_EXPBD_Init(void);
-static HAL_StatusTypeDef I2C_EXPBD_WriteData(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size);
-static HAL_StatusTypeDef I2C_EXPBD_ReadData(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size);
-#ifdef I2C_DMA_MODE
-/*I2C read dma*/
-static HAL_StatusTypeDef I2C_EXPBD_Read_DMA(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size);
-#endif
-/************************************SPI2**********************************************/
-#ifdef CANNON_V1
-static HAL_StatusTypeDef  SPI2_EXPBD_Init(void);
-static HAL_StatusTypeDef    SPI2_EXPBD_IO_ReadByte(uint8_t* pBuffer, uint8_t RegisterAddr,uint16_t NumByteToRead );
-static HAL_StatusTypeDef SPI2_EXPBD_IO_WriteByte(uint8_t* pBuffer, uint8_t RegisterAddr,uint16_t NumByteToWrite);
-#endif
-/** @defgroup X_NUCLEO_IKS01A1_Exported_Functions X_NUCLEO_IKS01A1_Exported_Functions
- * @{
- */
-
-
-
 /********************************* LINK IMU 6 AXES *****************************/
 /**
  * @brief  Configures LSM6DS0 I2C interface
@@ -316,81 +244,6 @@ IMU_6AXES_StatusTypeDef LSM6DS3_IO_Read_DMA( uint8_t* pBuffer, uint8_t DeviceAdd
 #endif
 
 /********************************* LINK MAGNETO *****************************/
-
-/* Private functions ---------------------------------------------------------*/
-
-/*******************************************************************************
-* Function Name		: LSM303AGR_MAG_ReadReg
-* Description		: Generic Reading function. It must be fullfilled with either
-*					: I2C or SPI reading functions
-* Input				: Register Address
-* Output			: Data REad
-* Return			: None
-*******************************************************************************/
-u8_t LSM303AGR_MAG_ReadReg(u8_t Reg, u8_t* Data)
-{
-
-    //To be completed with either I2c or SPI reading function
-    //i.e.: *Data = SPI_Mems_Read_Reg( Reg );
-    return I2C_EXPBD_ReadData(Data, LSM303AGR_MAG_I2C_ADDRESS, Reg, 1);
-
-
-
-}
-
-/*******************************************************************************
-* Function Name		: LSM303AGR_MAG_WriteReg
-* Description		: Generic Writing function. It must be fullfilled with either
-*					: I2C or SPI writing function
-* Input				: Register Address, Data to be written
-* Output			: None
-* Return			: None
-*******************************************************************************/
-u8_t LSM303AGR_MAG_WriteReg(u8_t Reg, u8_t Data)
-{
-
-    //To be completed with either I2c or SPI writing function
-    //i.e.: SPI_Mems_Write_Reg(Reg, Data);
-    return I2C_EXPBD_WriteData(&Data,  LSM303AGR_MAG_I2C_ADDRESS,  Reg, 1);
-
-}
-
-/*******************************************************************************
-* Function Name		: LSM303AGR_ACC_ReadReg
-* Description		: Generic Reading function. It must be fullfilled with either
-*					: I2C or SPI reading functions
-* Input				: Register Address
-* Output			: Data REad
-* Return			: None
-*******************************************************************************/
-u8_t LSM303AGR_ACC_ReadReg(u8_t Reg, u8_t* Data)
-{
-
-    //To be completed with either I2c or SPI reading function
-    //i.e.: *Data = SPI_Mems_Read_Reg( Reg );
-    if(!I2C_EXPBD_ReadData(Data, LSM303AGR_ACC_I2C_ADDRESS, Reg, 1))  //[Example]
-        return MEMS_ERROR;                                                        //[Example]
-    else                                                                        //[Example]
-        return MEMS_SUCCESS;                                                      //[Example]
-}
-
-/*******************************************************************************
-* Function Name		: LSM303AGR_ACC_WriteReg
-* Description		: Generic Writing function. It must be fullfilled with either
-*					: I2C or SPI writing function
-* Input				: Register Address, Data to be written
-* Output			: None
-* Return			: None
-*******************************************************************************/
-u8_t LSM303AGR_ACC_WriteReg(u8_t Reg, u8_t Data)
-{
-
-    //To be completed with either I2c or SPI writing function
-    //i.e.: SPI_Mems_Write_Reg(Reg, Data);
-    I2C_EXPBD_WriteData(&Data,  LSM303AGR_ACC_I2C_ADDRESS,  Reg, 1);       //[Example]
-    return MEMS_SUCCESS;                                                        //[Example]
-}
-
 /**
  * @brief  Configures LSM303AGR interrupt lines for NUCLEO boards
  * @retval None
@@ -933,7 +786,7 @@ static HAL_StatusTypeDef I2C_EXPBD_Init(void)
  * @retval HAL status
  */
 
-static HAL_StatusTypeDef I2C_EXPBD_WriteData(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size)
+HAL_StatusTypeDef I2C_EXPBD_WriteData(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size)
 {
     HAL_StatusTypeDef status = HAL_OK;
 
@@ -992,7 +845,7 @@ void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c)
  * @param  Size the size in bytes of the value to be read
  * @retval HAL status.
  */
-static HAL_StatusTypeDef I2C_EXPBD_ReadData(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size)
+HAL_StatusTypeDef I2C_EXPBD_ReadData(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size)
 {
     HAL_StatusTypeDef status = HAL_OK;
 

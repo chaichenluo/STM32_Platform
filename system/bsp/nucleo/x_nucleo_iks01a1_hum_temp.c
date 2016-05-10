@@ -64,7 +64,7 @@
 /** @defgroup X_NUCLEO_IKS01A1_HUM_TEMP_Private_Variables X_NUCLEO_IKS01A1_HUM_TEMP_Private_Variables
  * @{
  */
-static HUM_TEMP_DrvTypeDef *Hum_tempDrv = NULL;
+static HUM_TEMP_DrvTypeDef *Hum_tempDrv = (HUM_TEMP_DrvTypeDef*)NULL;
 static uint8_t HumTempInitialized = 0;
 /**
  * @}
@@ -97,25 +97,25 @@ HUM_TEMP_StatusTypeDef    BSP_HUM_TEMP_Init(void)
         /* Hts221 Init */
         if ( Hum_tempDrv->Init == NULL )
         {
-            Hum_tempDrv = NULL;
+            Hum_tempDrv = (HUM_TEMP_DrvTypeDef*)NULL;
             return HUM_TEMP_ERROR;
         }
 
         if(Hum_tempDrv->Init(&InitStructure) != HUM_TEMP_OK)
         {
-            Hum_tempDrv = NULL;
+            Hum_tempDrv = (HUM_TEMP_DrvTypeDef*)NULL;
             return HUM_TEMP_ERROR;
         }
 
         if ( Hum_tempDrv->ReadID == NULL )
         {
-            Hum_tempDrv = NULL;
+            Hum_tempDrv = (HUM_TEMP_DrvTypeDef*)NULL;
             return HUM_TEMP_ERROR;
         }
 
         if(Hum_tempDrv->ReadID(&ht_id) != HUM_TEMP_OK)
         {
-            Hum_tempDrv = NULL;
+            Hum_tempDrv = (HUM_TEMP_DrvTypeDef*)NULL;
             return HUM_TEMP_ERROR;
         }
 

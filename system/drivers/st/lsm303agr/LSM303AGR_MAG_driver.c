@@ -68,7 +68,24 @@ void LSM303AGR_MAG_SwapHighLowByte(u8_t *bufferToSwap, u8_t numberOfByte, u8_t d
 }
 
 /* Exported functions ---------------------------------------------------------*/
+u8_t LSM303AGR_MAG_ReadReg(u8_t Reg, u8_t* Data)
+{
 
+    //To be completed with either I2c or SPI reading function
+    //i.e.: *Data = SPI_Mems_Read_Reg( Reg );
+    return I2C_EXPBD_ReadData(Data, LSM303AGR_MAG_I2C_ADDRESS, Reg, 1);
+
+
+
+}
+u8_t LSM303AGR_MAG_WriteReg(u8_t Reg, u8_t Data)
+{
+
+    //To be completed with either I2c or SPI writing function
+    //i.e.: SPI_Mems_Write_Reg(Reg, Data);
+    return I2C_EXPBD_WriteData(&Data,  LSM303AGR_MAG_I2C_ADDRESS,  Reg, 1);
+
+}
 /*******************************************************************************
 * Function Name  : LSM303AGR_MAG_W_OFF_X_L
 * Description    : Write OFF_X_L
@@ -429,7 +446,8 @@ status_t LSM303AGR_MAG_R_MD(LSM303AGR_MAG_MD_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_A, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_MD_MASK; //mask
+    //*value &= LSM303AGR_MAG_MD_MASK; //mask
+    *value = (LSM303AGR_MAG_MD_t)((*value) & LSM303AGR_MAG_MD_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -469,7 +487,8 @@ status_t LSM303AGR_MAG_R_ODR(LSM303AGR_MAG_ODR_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_A, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_ODR_MASK; //mask
+    //*value &= LSM303AGR_MAG_ODR_MASK; //mask
+    *value = (LSM303AGR_MAG_ODR_t)((*value) & LSM303AGR_MAG_ODR_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -509,7 +528,8 @@ status_t LSM303AGR_MAG_R_LP(LSM303AGR_MAG_LP_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_A, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_LP_MASK; //mask
+    //*value &= LSM303AGR_MAG_LP_MASK; //mask
+    *value = (LSM303AGR_MAG_LP_t)((*value) & LSM303AGR_MAG_LP_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -549,7 +569,8 @@ status_t LSM303AGR_MAG_R_SOFT_RST(LSM303AGR_MAG_SOFT_RST_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_A, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_SOFT_RST_MASK; //mask
+    //*value &= LSM303AGR_MAG_SOFT_RST_MASK; //mask
+    *value = (LSM303AGR_MAG_SOFT_RST_t)((*value) & LSM303AGR_MAG_SOFT_RST_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -589,7 +610,8 @@ status_t LSM303AGR_MAG_R_LPF(LSM303AGR_MAG_LPF_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_B, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_LPF_MASK; //mask
+    //*value &= LSM303AGR_MAG_LPF_MASK; //mask
+    *value = (LSM303AGR_MAG_LPF_t)((*value) & LSM303AGR_MAG_LPF_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -629,7 +651,8 @@ status_t LSM303AGR_MAG_R_OFF_CANC(LSM303AGR_MAG_OFF_CANC_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_B, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_OFF_CANC_MASK; //mask
+    //*value &= LSM303AGR_MAG_OFF_CANC_MASK; //mask
+    *value = (LSM303AGR_MAG_OFF_CANC_t)((*value) & LSM303AGR_MAG_OFF_CANC_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -669,7 +692,8 @@ status_t LSM303AGR_MAG_R_SET_FREQ(LSM303AGR_MAG_SET_FREQ_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_B, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_SET_FREQ_MASK; //mask
+    //*value &= LSM303AGR_MAG_SET_FREQ_MASK; //mask
+    *value = (LSM303AGR_MAG_SET_FREQ_t)((*value) & LSM303AGR_MAG_SET_FREQ_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -709,7 +733,8 @@ status_t LSM303AGR_MAG_R_INT_ON_DATAOFF(LSM303AGR_MAG_INT_ON_DATAOFF_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_B, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_INT_ON_DATAOFF_MASK; //mask
+    //*value &= LSM303AGR_MAG_INT_ON_DATAOFF_MASK; //mask
+    *value = (LSM303AGR_MAG_INT_ON_DATAOFF_t)((*value) & LSM303AGR_MAG_INT_ON_DATAOFF_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -749,7 +774,8 @@ status_t LSM303AGR_MAG_R_INT_MAG(LSM303AGR_MAG_INT_MAG_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_C, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_INT_MAG_MASK; //mask
+    //*value &= LSM303AGR_MAG_INT_MAG_MASK; //mask
+    *value = (LSM303AGR_MAG_INT_MAG_t)((*value) & LSM303AGR_MAG_INT_MAG_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -789,7 +815,8 @@ status_t LSM303AGR_MAG_R_ST(LSM303AGR_MAG_ST_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_C, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_ST_MASK; //mask
+    //*value &= LSM303AGR_MAG_ST_MASK; //mask
+    *value = (LSM303AGR_MAG_ST_t)((*value) & LSM303AGR_MAG_ST_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -829,7 +856,8 @@ status_t LSM303AGR_MAG_R_BLE(LSM303AGR_MAG_BLE_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_C, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_BLE_MASK; //mask
+    //*value &= LSM303AGR_MAG_BLE_MASK; //mask
+    *value = (LSM303AGR_MAG_BLE_t)((*value) & LSM303AGR_MAG_BLE_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -869,7 +897,8 @@ status_t LSM303AGR_MAG_R_BDU(LSM303AGR_MAG_BDU_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_C, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_BDU_MASK; //mask
+    //*value &= LSM303AGR_MAG_BDU_MASK; //mask
+    *value = (LSM303AGR_MAG_BDU_t)((*value) & LSM303AGR_MAG_BDU_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -909,7 +938,8 @@ status_t LSM303AGR_MAG_R_I2C_DIS(LSM303AGR_MAG_I2C_DIS_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_C, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_I2C_DIS_MASK; //mask
+    //*value &= LSM303AGR_MAG_I2C_DIS_MASK; //mask
+    *value = (LSM303AGR_MAG_I2C_DIS_t)((*value) & LSM303AGR_MAG_I2C_DIS_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -949,7 +979,8 @@ status_t LSM303AGR_MAG_R_INT_MAG_PIN(LSM303AGR_MAG_INT_MAG_PIN_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_CFG_REG_C, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_INT_MAG_PIN_MASK; //mask
+    //*value &= LSM303AGR_MAG_INT_MAG_PIN_MASK; //mask
+    *value = (LSM303AGR_MAG_INT_MAG_PIN_t)((*value) & LSM303AGR_MAG_INT_MAG_PIN_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -989,7 +1020,8 @@ status_t LSM303AGR_MAG_R_IEN(LSM303AGR_MAG_IEN_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_CTRL_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_IEN_MASK; //mask
+    //*value &= LSM303AGR_MAG_IEN_MASK; //mask
+    *value = (LSM303AGR_MAG_IEN_t)((*value) & LSM303AGR_MAG_IEN_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1029,7 +1061,8 @@ status_t LSM303AGR_MAG_R_IEL(LSM303AGR_MAG_IEL_t *value)
     if( HAL_OK !=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_CTRL_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_IEL_MASK; //mask
+    //*value &= LSM303AGR_MAG_IEL_MASK; //mask
+    *value = (LSM303AGR_MAG_IEL_t)((*value) & LSM303AGR_MAG_IEL_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1069,7 +1102,8 @@ status_t LSM303AGR_MAG_R_IEA(LSM303AGR_MAG_IEA_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_CTRL_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_IEA_MASK; //mask
+    //*value &= LSM303AGR_MAG_IEA_MASK; //mask
+    *value = (LSM303AGR_MAG_IEA_t)((*value) & LSM303AGR_MAG_IEA_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1109,7 +1143,8 @@ status_t LSM303AGR_MAG_R_ZIEN(LSM303AGR_MAG_ZIEN_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_CTRL_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_ZIEN_MASK; //mask
+    //*value &= LSM303AGR_MAG_ZIEN_MASK; //mask
+    *value = (LSM303AGR_MAG_ZIEN_t)((*value) & LSM303AGR_MAG_ZIEN_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1149,7 +1184,8 @@ status_t LSM303AGR_MAG_R_YIEN(LSM303AGR_MAG_YIEN_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_CTRL_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_YIEN_MASK; //mask
+    //*value &= LSM303AGR_MAG_YIEN_MASK; //mask
+    *value = (LSM303AGR_MAG_YIEN_t)((*value) & LSM303AGR_MAG_YIEN_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1189,7 +1225,8 @@ status_t LSM303AGR_MAG_R_XIEN(LSM303AGR_MAG_XIEN_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_CTRL_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_XIEN_MASK; //mask
+    //*value &= LSM303AGR_MAG_XIEN_MASK; //mask
+    *value = (LSM303AGR_MAG_XIEN_t)((*value) & LSM303AGR_MAG_XIEN_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1206,7 +1243,8 @@ status_t LSM303AGR_MAG_R_INT(LSM303AGR_MAG_INT_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_SOURCE_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_INT_MASK; //mask
+    //*value &= LSM303AGR_MAG_INT_MASK; //mask
+    *value = (LSM303AGR_MAG_INT_t)((*value) & LSM303AGR_MAG_INT_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1223,7 +1261,8 @@ status_t LSM303AGR_MAG_R_MROI(LSM303AGR_MAG_MROI_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_SOURCE_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_MROI_MASK; //mask
+    //*value &= LSM303AGR_MAG_MROI_MASK; //mask
+    *value = (LSM303AGR_MAG_MROI_t)((*value) & LSM303AGR_MAG_MROI_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1240,7 +1279,8 @@ status_t LSM303AGR_MAG_R_N_TH_S_Z(LSM303AGR_MAG_N_TH_S_Z_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_SOURCE_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_N_TH_S_Z_MASK; //mask
+    //*value &= LSM303AGR_MAG_N_TH_S_Z_MASK; //mask
+    *value = (LSM303AGR_MAG_N_TH_S_Z_t)((*value) & LSM303AGR_MAG_N_TH_S_Z_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1257,7 +1297,8 @@ status_t LSM303AGR_MAG_R_N_TH_S_Y(LSM303AGR_MAG_N_TH_S_Y_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_SOURCE_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_N_TH_S_Y_MASK; //mask
+    //*value &= LSM303AGR_MAG_N_TH_S_Y_MASK; //mask
+    *value = (LSM303AGR_MAG_N_TH_S_Y_t)((*value) & LSM303AGR_MAG_N_TH_S_Y_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1274,7 +1315,8 @@ status_t LSM303AGR_MAG_R_N_TH_S_X(LSM303AGR_MAG_N_TH_S_X_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_SOURCE_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_N_TH_S_X_MASK; //mask
+    //*value &= LSM303AGR_MAG_N_TH_S_X_MASK; //mask
+    *value = (LSM303AGR_MAG_N_TH_S_X_t)((*value) & LSM303AGR_MAG_N_TH_S_X_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1291,7 +1333,8 @@ status_t LSM303AGR_MAG_R_P_TH_S_Z(LSM303AGR_MAG_P_TH_S_Z_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_SOURCE_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_P_TH_S_Z_MASK; //mask
+    //*value &= LSM303AGR_MAG_P_TH_S_Z_MASK; //mask
+    *value = (LSM303AGR_MAG_P_TH_S_Z_t)((*value) & LSM303AGR_MAG_P_TH_S_Z_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1308,7 +1351,8 @@ status_t LSM303AGR_MAG_R_P_TH_S_Y(LSM303AGR_MAG_P_TH_S_Y_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_SOURCE_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_P_TH_S_Y_MASK; //mask
+    //*value &= LSM303AGR_MAG_P_TH_S_Y_MASK; //mask
+    *value = (LSM303AGR_MAG_P_TH_S_Y_t)((*value) & LSM303AGR_MAG_P_TH_S_Y_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1325,7 +1369,8 @@ status_t LSM303AGR_MAG_R_P_TH_S_X(LSM303AGR_MAG_P_TH_S_X_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_INT_SOURCE_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_P_TH_S_X_MASK; //mask
+    //*value &= LSM303AGR_MAG_P_TH_S_X_MASK; //mask
+    *value = (LSM303AGR_MAG_P_TH_S_X_t)((*value) & LSM303AGR_MAG_P_TH_S_X_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1343,7 +1388,8 @@ status_t LSM303AGR_MAG_R_XDA(LSM303AGR_MAG_XDA_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_STATUS_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_XDA_MASK; //mask
+    //*value &= LSM303AGR_MAG_XDA_MASK; //mask
+    *value = (LSM303AGR_MAG_XDA_t)((*value) & LSM303AGR_MAG_XDA_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1360,7 +1406,8 @@ status_t LSM303AGR_MAG_R_YDA(LSM303AGR_MAG_YDA_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_STATUS_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_YDA_MASK; //mask
+    //*value &= LSM303AGR_MAG_YDA_MASK; //mask
+    *value = (LSM303AGR_MAG_YDA_t)((*value) & LSM303AGR_MAG_YDA_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1377,7 +1424,8 @@ status_t LSM303AGR_MAG_R_ZDA(LSM303AGR_MAG_ZDA_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_STATUS_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_ZDA_MASK; //mask
+    //*value &= LSM303AGR_MAG_ZDA_MASK; //mask
+    *value = (LSM303AGR_MAG_ZDA_t)((*value) & LSM303AGR_MAG_ZDA_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1394,7 +1442,8 @@ status_t LSM303AGR_MAG_R_ZYXDA(LSM303AGR_MAG_ZYXDA_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_STATUS_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_ZYXDA_MASK; //mask
+    //*value &= LSM303AGR_MAG_ZYXDA_MASK; //mask
+    *value = (LSM303AGR_MAG_ZYXDA_t)((*value) & LSM303AGR_MAG_ZYXDA_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1411,7 +1460,8 @@ status_t LSM303AGR_MAG_R_XOR(LSM303AGR_MAG_XOR_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_STATUS_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_XOR_MASK; //mask
+    //*value &= LSM303AGR_MAG_XOR_MASK; //mask
+    *value = (LSM303AGR_MAG_XOR_t)((*value) & LSM303AGR_MAG_XOR_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1428,7 +1478,8 @@ status_t LSM303AGR_MAG_R_YOR(LSM303AGR_MAG_YOR_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_STATUS_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_YOR_MASK; //mask
+    //*value &= LSM303AGR_MAG_YOR_MASK; //mask
+    *value = (LSM303AGR_MAG_YOR_t)((*value) & LSM303AGR_MAG_YOR_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1445,7 +1496,8 @@ status_t LSM303AGR_MAG_R_ZOR(LSM303AGR_MAG_ZOR_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_STATUS_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_ZOR_MASK; //mask
+    //*value &= LSM303AGR_MAG_ZOR_MASK; //mask
+    *value = (LSM303AGR_MAG_ZOR_t)((*value) & LSM303AGR_MAG_ZOR_MASK);
 
     return MEMS_SUCCESS;
 }
@@ -1462,7 +1514,8 @@ status_t LSM303AGR_MAG_R_ZYXOR(LSM303AGR_MAG_ZYXOR_t *value)
     if( HAL_OK!=LSM303AGR_MAG_ReadReg(LSM303AGR_MAG_STATUS_REG, (u8_t *)value) )
         return MEMS_ERROR;
 
-    *value &= LSM303AGR_MAG_ZYXOR_MASK; //mask
+    //*value &= LSM303AGR_MAG_ZYXOR_MASK; //mask
+    *value = (LSM303AGR_MAG_ZYXOR_t)((*value) & LSM303AGR_MAG_ZYXOR_MASK);
 
     return MEMS_SUCCESS;
 }

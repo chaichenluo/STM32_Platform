@@ -92,7 +92,7 @@ IMU_6AXES_DrvTypeDef LSM6DS3Drv =
     LSM6DS3_G_GetSensitivity,
     LSM6DS3_G_Get_FS,
     LSM6DS3_G_Set_FS,
-    NULL
+    (IMU_6AXES_DrvExtTypeDef*)NULL
 };
 
 LSM6DS3_DrvExtTypeDef LSM6DS3Drv_ext_internal =

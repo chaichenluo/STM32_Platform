@@ -7,6 +7,10 @@
 #include "stm32f4xx_hal.h"
 #include "stdio.h"
 
+#ifdef __cplusplus    //
+extern "C" {          //
+#endif
+	
 void UART_Init(void);
 
 /* Exported types ------------------------------------------------------------*/
@@ -32,6 +36,10 @@ void UART_Init(void);
   
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __STM32F4XX_HAL_MSP_H */
 

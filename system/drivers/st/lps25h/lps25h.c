@@ -74,7 +74,7 @@ PRESSURE_DrvTypeDef LPS25HDrv =
     LPS25H_GetPressure,
     LPS25H_GetTemperature,
     LPS25H_SlaveAddrRemap,
-    NULL
+    (PRESSURE_DrvExtTypeDef*)NULL
 };
 
 /* ------------------------------------------------------- */

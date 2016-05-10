@@ -62,8 +62,8 @@ void list_remove_head (tListNode * listHead, tListNode ** node )
 {
 	*node = listHead->next;
 	list_remove_node (listHead->next);
-	(*node)->next = NULL;
-	(*node)->prev = NULL;
+	(*node)->next = (tListNode*)NULL;
+	(*node)->prev = (tListNode*)NULL;
 }
 
 
@@ -71,8 +71,8 @@ void list_remove_tail (tListNode * listHead, tListNode ** node )
 {
 	*node = listHead->prev;
 	list_remove_node (listHead->prev);
-	(*node)->next = NULL;
-	(*node)->prev = NULL;
+	(*node)->next = (tListNode*)NULL;
+	(*node)->prev = (tListNode*)NULL;
 }
 
 

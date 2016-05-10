@@ -54,7 +54,7 @@ extern "C" {
 #include "magneto.h"
 #include "pressure.h"
 #include "LSM303AGR_MAG_driver.h"
-#include "LSM303AGR_ACC_driver.h"
+//#include "LSM303AGR_ACC_driver.h"
 #include "stm32f4xx_hal_msp.h"
 
 #endif
@@ -296,7 +296,75 @@ typedef struct
 /**
   * @}
   */
+/* Link function for HUM_TEMP peripheral */
+HUM_TEMP_StatusTypeDef HTS221_IO_Init(void);
+void HTS221_IO_ITConfig( void );
+HUM_TEMP_StatusTypeDef HTS221_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+                                       uint16_t NumByteToWrite);
+HUM_TEMP_StatusTypeDef HTS221_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+                                      uint16_t NumByteToRead);
 
+static IMU_6AXES_StatusTypeDef IMU_6AXES_IO_Init(void);
+static IMU_6AXES_StatusTypeDef IMU_6AXES_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+        uint16_t NumByteToWrite);
+static IMU_6AXES_StatusTypeDef IMU_6AXES_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+        uint16_t NumByteToRead);
+#ifdef I2C_DMA_MODE
+static IMU_6AXES_StatusTypeDef IMU_6AXES_IO_Read_DMA( uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+        uint16_t NumByteToRead );
+#endif
+#ifdef MAGNETO_DRIVER
+static MAGNETO_StatusTypeDef MAGNETO_IO_Init(void);
+static MAGNETO_StatusTypeDef MAGNETO_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+        uint16_t NumByteToWrite);
+static MAGNETO_StatusTypeDef MAGNETO_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+        uint16_t NumByteToRead);
+#endif
+static PRESSURE_StatusTypeDef PRESSURE_IO_Init(void);
+static PRESSURE_StatusTypeDef PRESSURE_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+        uint16_t NumByteToWrite);
+static PRESSURE_StatusTypeDef PRESSURE_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+        uint16_t NumByteToRead);
+static HUM_TEMP_StatusTypeDef HUM_TEMP_IO_Init(void);
+static HUM_TEMP_StatusTypeDef HUM_TEMP_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+        uint16_t NumByteToWrite);
+static HUM_TEMP_StatusTypeDef HUM_TEMP_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+        uint16_t NumByteToRead);
+
+/************************************I2C**********************************************/
+static void I2C_EXPBD_MspInit(void);
+static void I2C_EXPBD_Error(uint8_t Addr);
+static HAL_StatusTypeDef I2C_EXPBD_Init(void);
+HAL_StatusTypeDef I2C_EXPBD_WriteData(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size);
+HAL_StatusTypeDef I2C_EXPBD_ReadData(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size);
+#ifdef I2C_DMA_MODE
+/*I2C read dma*/
+static HAL_StatusTypeDef I2C_EXPBD_Read_DMA(uint8_t* pBuffer, uint8_t Addr, uint8_t Reg, uint16_t Size);
+#endif
+/************************************SPI2**********************************************/
+#ifdef CANNON_V1
+static HAL_StatusTypeDef  SPI2_EXPBD_Init(void);
+static HAL_StatusTypeDef    SPI2_EXPBD_IO_ReadByte(uint8_t* pBuffer, uint8_t RegisterAddr,uint16_t NumByteToRead );
+static HAL_StatusTypeDef SPI2_EXPBD_IO_WriteByte(uint8_t* pBuffer, uint8_t RegisterAddr,uint16_t NumByteToWrite);
+#endif
+/** @defgroup X_NUCLEO_IKS01A1_Exported_Functions X_NUCLEO_IKS01A1_Exported_Functions
+ * @{
+ */
+
+
+/* Link function for PRESSURE peripheral */
+PRESSURE_StatusTypeDef LPS25H_IO_Init(void);
+void LPS25H_IO_ITConfig( void );
+PRESSURE_StatusTypeDef LPS25HB_IO_Init(void);
+void LPS25HB_IO_ITConfig( void );
+PRESSURE_StatusTypeDef LPS25H_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+                                       uint16_t NumByteToWrite);
+PRESSURE_StatusTypeDef LPS25HB_IO_Write(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+                                        uint16_t NumByteToWrite);
+PRESSURE_StatusTypeDef LPS25H_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+                                      uint16_t NumByteToRead);
+PRESSURE_StatusTypeDef LPS25HB_IO_Read(uint8_t* pBuffer, uint8_t DeviceAddr, uint8_t RegisterAddr,
+                                       uint16_t NumByteToRead);
 /**
   * @}
   */

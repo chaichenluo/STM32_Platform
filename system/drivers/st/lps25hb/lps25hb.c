@@ -36,6 +36,7 @@
  */
 /* Includes ------------------------------------------------------------------*/
 #include "lps25hb.h"
+#include "x_nucleo_iks01a1.h"
 
 /** @addtogroup BSP
  * @{
@@ -74,7 +75,7 @@ PRESSURE_DrvTypeDef LPS25HBDrv =
     LPS25HB_GetPressure,
     LPS25HB_GetTemperature,
     LPS25HB_SlaveAddrRemap,
-    NULL
+    (PRESSURE_DrvExtTypeDef*)NULL
 };
 
 /* ------------------------------------------------------- */

@@ -27,6 +27,10 @@
 #ifndef __LSM303AGR_ACC_DRIVER__H
 #define __LSM303AGR_ACC_DRIVER__H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+	
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 
@@ -83,11 +87,6 @@ typedef enum {
 
 #define LSM303AGR_ACC_WHO_AM_I         0x33
 
-/* Private Function Prototype -------------------------------------------------------*/
-
-u8_t LSM303AGR_ACC_ReadReg(u8_t Reg, u8_t* Data);
-u8_t LSM303AGR_ACC_WriteReg(u8_t Reg, u8_t Data); 
-void LSM303AGR_ACC_SwapHighLowByte(u8_t *bufferToSwap, u8_t numberOfByte, u8_t dimension); 
 
 
 /************** Device Register  *******************/
@@ -1579,4 +1578,11 @@ status_t LSM303AGR_ACC_Get_Voltage_ADC(u8_t *buff);
 *******************************************************************************/
 status_t LSM303AGR_ACC_Get_Raw_Acceleration(u8_t *buff); 
 status_t LSM303AGR_ACC_Get_Acceleration(int *buff);
+
+u8_t LSM303AGR_ACC_ReadReg(u8_t Reg, u8_t* Data);
+u8_t LSM303AGR_ACC_WriteReg(u8_t Reg, u8_t Data); 
+#ifdef __cplusplus
+}
+#endif
+
 #endif

@@ -91,12 +91,12 @@
 /**
  * Enable interrupts from HCI controller.
  */
-void Enable_SPI_IRQ(void);
+//void Enable_SPI_IRQ(void);
 
 /**
  * Disable interrupts from BLE controller.
  */
-void Disable_SPI_IRQ(void);
+//void Disable_SPI_IRQ(void);
 
 void Hal_Init_Timer(void);
 uint32_t Hal_Get_Timer_Value(void);

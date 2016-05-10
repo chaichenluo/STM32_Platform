@@ -37,6 +37,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "hts221.h"
 #include <math.h>
+#include "x_nucleo_iks01a1.h"
 
 /** @addtogroup BSP
  * @{
@@ -74,7 +75,7 @@ HUM_TEMP_DrvTypeDef Hts221Drv =
     0,
     HTS221_GetHumidity,
     HTS221_GetTemperature,
-    NULL
+    (HUM_TEMP_DrvExtTypeDef*)NULL
 };
 
 /* ------------------------------------------------------- */
@@ -355,8 +356,8 @@ static HUM_TEMP_StatusTypeDef HTS221_GetHumidity(float* pfData)
     H_rh = ( float )(((( H_T_out - H0_T0_out ) * ( H1_rh - H0_rh )) / ( H1_T0_out - H0_T0_out )) + H0_rh );
 
     // Truncate to specific number of decimal digits
-    humidity_t = (uint16_t)(H_rh * pow(10, HUM_DECIMAL_DIGITS));
-    *pfData = ((float)humidity_t) / pow(10, HUM_DECIMAL_DIGITS);
+    humidity_t = (uint16_t)(H_rh * pow((float)10, (int)HUM_DECIMAL_DIGITS));
+    *pfData = ((float)humidity_t) / pow((float)10, (int)HUM_DECIMAL_DIGITS);
 
     // Prevent data going below 0% and above 100% due to linear interpolation
     if ( *pfData <   0.0f ) *pfData =   0.0f;
@@ -423,9 +424,9 @@ static HUM_TEMP_StatusTypeDef HTS221_GetTemperature(float* pfData)
 
     T_degC = ((float)(T_out - T0_out)) / (T1_out - T0_out) * (T1_degC - T0_degC) + T0_degC;
 
-    temperature_t = (int16_t)(T_degC * pow(10, TEMP_DECIMAL_DIGITS));
+    temperature_t = (int16_t)(T_degC * pow((float)10, (int)TEMP_DECIMAL_DIGITS));
 
-    *pfData = ((float)temperature_t) / pow(10, TEMP_DECIMAL_DIGITS);
+    *pfData = ((float)temperature_t) / pow((float)10, (int)TEMP_DECIMAL_DIGITS);
 
     return HUM_TEMP_OK;
 }

@@ -40,6 +40,10 @@
 #include "stm32f4xx_hal.h"
 #include "bluenrg_sdk_api.h"
 
+#ifdef __cplusplus    //
+extern "C" {          //
+#endif
+	
 /** @addtogroup STM32F4xx_HAL_Examples
   * @{
   */
@@ -266,3 +270,6 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef *hrtc)
   */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+#ifdef __cplusplus
+}
+#endif

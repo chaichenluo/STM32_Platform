@@ -63,7 +63,7 @@
 /** @defgroup X_NUCLEO_IKS01A1_PRESSURE_Private_Variables X_NUCLEO_IKS01A1_PRESSURE_Private_Variables
  * @{
  */
-static PRESSURE_DrvTypeDef *PressureDrv = NULL;
+static PRESSURE_DrvTypeDef *PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
 static uint8_t PressureInitialized = 0;
 static uint8_t pressure_sensor_type = 1; /* 1 activates LPS25HB, 0 activates LPS25H */
 
@@ -107,28 +107,28 @@ PRESSURE_StatusTypeDef BSP_PRESSURE_Init(void)
                 /* Pressure sensor init */
                 if ( PressureDrv->Init == NULL )
                 {
-                    PressureDrv = NULL;
+                    PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
                     pressure_sensor_type--;
                     break;
                 }
 
                 if(PressureDrv->Init(&InitStructure) != PRESSURE_OK)
                 {
-                    PressureDrv = NULL;
+                    PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
                     pressure_sensor_type--;
                     break;
                 }
 
                 if ( PressureDrv->ReadID == NULL )
                 {
-                    PressureDrv = NULL;
+                    PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
                     pressure_sensor_type--;
                     break;
                 }
 
                 if(PressureDrv->ReadID(&p_id) != PRESSURE_OK)
                 {
-                    PressureDrv = NULL;
+                    PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
                     pressure_sensor_type--;
                     break;
                 }
@@ -142,7 +142,7 @@ PRESSURE_StatusTypeDef BSP_PRESSURE_Init(void)
                 }
                 else
                 {
-                    PressureDrv = NULL;
+                    PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
                     pressure_sensor_type--;
                     break;
                 }
@@ -164,25 +164,25 @@ PRESSURE_StatusTypeDef BSP_PRESSURE_Init(void)
                 /* Pressure sensor init */
                 if ( PressureDrv->Init == NULL )
                 {
-                    PressureDrv = NULL;
+                    PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
                     return PRESSURE_ERROR;
                 }
 
                 if(PressureDrv->Init(&InitStructure) != PRESSURE_OK)
                 {
-                    PressureDrv = NULL;
+                    PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
                     return PRESSURE_ERROR;
                 }
 
                 if ( PressureDrv->ReadID == NULL )
                 {
-                    PressureDrv = NULL;
+                    PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
                     return PRESSURE_ERROR;
                 }
 
                 if(PressureDrv->ReadID(&p_id) != PRESSURE_OK)
                 {
-                    PressureDrv = NULL;
+                    PressureDrv = (PRESSURE_DrvTypeDef*)NULL;
                     return PRESSURE_ERROR;
                 }
 
